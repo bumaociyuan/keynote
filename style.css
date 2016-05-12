@@ -1,0 +1,45 @@
+strong {
+  color: #ff6633;
+}
+
+a {
+  text-decoration: none;
+  color: #0664aa;
+}
+
+
+.full img {
+  width: 100%;
+  height: 100%;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+}
+
+/* make ul 2 columns */
+.columns ul {
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}
+/* end */
+
+/* change li dot color */
+ul {
+  list-style: none;
+  padding:0;
+  margin:0;
+}
+
+li { 
+  padding-left: 1em; 
+  text-indent: -.7em;
+}
+
+li:before {
+  content: "• ";
+  color: #F37E3B; /* or whatever color you prefer */
+}
+/* end */ 
