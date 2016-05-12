@@ -201,6 +201,7 @@ template: template
 git-cherry-pick - Apply the changes introduced by some existing commits
 ```
 
+Demo next page
 ---
 template: template
 
@@ -233,6 +234,7 @@ git-clone - Clone a repository into a new directory
 ```ruby
 $ git clone <repo-url>
 $ git clone <repo-url> <folder-name>
+# clone <repo-url> 进入 <folder-name> 文件夹
 ```
 
 ---
@@ -315,13 +317,13 @@ git-merge - Join two or more development histories together
 ```
 
 ```ruby
-                    A---B---C topic
+       Assume the following history exists and the current branch is "master":
+
+                     A---B---C topic
                     /
                D---E---F---G master
 
-
-$ git merge 
-
+$ git merge topic
 
                      A---B---C topic
                     /         \
@@ -335,11 +337,25 @@ template: template
 ```ruby
 git-pull - Fetch from and integrate with another repository or a local branch
 ```
+
+```ruby
+$ git pull 
+# 等效于
+$ git fetch && git merge
+```
+
 ---
 template: template
 ### git push
 ```ruby
 git-push - Update remote refs along with associated objects
+```
+
+```ruby
+$ git push --all
+# push 所有branch
+$ git push --tags
+# push 所有tag 
 ```
 ---
 template: template
@@ -349,7 +365,28 @@ template: template
 git-rebase - Reapply commits on top of another base tip
 ```
 
+```ruby
+       Assume the following history exists and the current branch is "topic":
 
+                     A---B---C topic
+                    /
+               D---E---F---G master
+
+
+       From this point, the result of either of the following commands:
+
+           git rebase master
+           git rebase master topic
+
+       would be:
+
+                             A'--B'--C' topic
+                            /
+               D---E---F---G master
+```
+
+
+Demo next page
 ---
 template: template
 <iframe src="http://pcottle.github.io/learnGitBranching/?gist_level_id=b167c989b29baa280526f327d5ce46df">
@@ -377,19 +414,49 @@ git-reflog - Manage reflog information
 reflog is short for Reference log
 ```
 
+```ruby
+$ git reflog
+```
+
+result
+```ruby
+e591465 HEAD@{0}: commit: modified: _posts/2016-05-12-hello-github.md
+8b99240 HEAD@{1}: checkout: moving from f7f7ac92fc7cb55e155ed402df7c61aa6a9d1038 to master
+f7f7ac9 HEAD@{2}: checkout: moving from master to f7f7ac92fc7cb55e155ed402df7c61aa6a9d1038
+8b99240 HEAD@{3}: commit: remove line
+9e880a2 HEAD@{4}: commit: add line
+f7f7ac9 HEAD@{5}: commit: modified: index.html
+9242b82 HEAD@{6}: commit: zx
+3b7f002 HEAD@{7}: commit: new file: 2016-05-12-hello-github.md
+f840487 HEAD@{8}: clone: from git@github.com:git-demonstration/git-demonstration.github.io.git
+```
+
 ---
 template: template
 ### git reset
 
 ```ruby
-$ git reset [--option] HEAD
+$ git reset [--option] <commit>
 ```
 
-option |![](images/local.png) | ![](images/index.png) | ![](images/workspace.png)
----------|------------ | ------------- | ------------
-soft  |  Content Cell | Content Cell  | Content Cell
-hard  |  Content Cell | Content Cell  | Content Cell
-不带参数|Content Cell | Content Cell  | Content Cell
+```ruby
+# 如果一个文件file 
+# 在workspace 里面状态是A
+# 在index 里面状态是B
+# 在HEAD 里面状态是C
+# 我们需要的target commit 里面file 状态是D
+$ git reset [--option] target
+# 结果如下
+```
+
+```ruby
+          working index HEAD target         working index HEAD
+           ----------------------------------------------------
+            A       B     C    D     --soft   A       B     D
+                                     --mixed  A       D     D
+                                     --hard   D       D     D
+# --mixed 和 不传option效果一样
+```
 
 ---
 template: template
@@ -397,6 +464,7 @@ template: template
 ```ruby
 git-revert - Revert some existing commits
 ```
+Demo next page
 ---
 template: template
 <iframe src="http://pcottle.github.io/learnGitBranching/?gist_level_id=1f9ca4031a8db73bed093d2c44e382b7">
@@ -412,6 +480,19 @@ git revert HEAD
 ---
 template: template
 ### git stash
+
+```ruby
+git-stash - Stash the changes in a dirty working directory away
+```
+
+```ruby
+$ git stash
+# 藏匿当前修改
+$ git stash list
+# stash 列表
+$ git stash clear
+# 清除 stash 列表
+```
 ---
 template: template
 ### git status
@@ -419,12 +500,30 @@ template: template
 ```ruby
 git-status - Show the working tree status
 ```
+
+```ruby
+$ git status -s
+# 简洁模式
+```
+
 ---
 template: template
 ### git tag
 
 ```ruby
 git-tag - Create, list, delete or verify a tag object signed with GPG
+```
+
+```ruby
+$ git tag [-l]
+# 查看tag 列表
+$ git show <tag-name>
+# 查看tag 详情
+$ git tag -a <tag-name> <commit>
+# 补打tag
+$ git push [origin] <tag-name>
+# push tag 
+$ git push [origin] --tags
 ```
 
 ---
@@ -500,10 +599,22 @@ template: template
 - clone 仓库
 - 下载所有代码
 - 下载一部分代码 [gitzip](bumaociyuan.github.io/gitzip)
+-
 ---
 template: template
 ### Creat repository and delete repository
 如何新建仓库，删除仓库
+### Star and fork repository , update fork
+### Create issue
+### Send pull request
+### Merge pull request
+
+Demo
+
+http://bumaociyuan.github.io/keynote
+https://github.com/bumaociyuan/keynote
+
+
 ---
 template: template
 ### **Github page**
@@ -534,15 +645,6 @@ GitBook is where you create, write and organize documentation and books with you
 
 [https://www.gitbook.com/](https://www.gitbook.com)
 
----
-template: template
-### Star and fork repository , update fork
-### Create issue
-### Send pull request
-### Merge pull request
-
-Demo
-
 
 ---
 template: template
@@ -561,12 +663,18 @@ template: template
 template: template
 ### Cooperate with people ( organization or add people to collaboration )
 
+https://github.com/username/repo/settings/collaboration
+
 ---
 template: template
 ### Setup git server
 * On linux [git-scm](https://git-scm.com/book/en/v2/Git-on-the-Server-Setting-Up-the-Server)
 * private repository ( free private repository: bitbucket, git on 360 driver )
 
+Quick demo setup a git on server
+
+???
+ssh root@10.5.1.249
 
 ---
 background-image: url(ai/end.jpeg)
