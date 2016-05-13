@@ -1,20 +1,28 @@
-setup
+# setup
 ```
-#install https://github.com/indexzero/http-server
-npm install http-server -g
+# install https://github.com/indexzero/http-server
 
-# install https://github.com/partageit/markdown-to-slides
-# http://tech.graze.com/2015/07/31/easily-create-slideshow-presentations-from-markdown-with-remark-js/
-npm install markdown-to-slides -g
+$ npm install http-server -g
+
+# launch http-server
+
+$ nohup http-server . &
+
+# visit http://localhost:8080 或者直接打开 index.html
+```
+
+# 修改
+
+```
+# 修改keynote.md 活着 style.css 
+
+$ sh rebuild.sh
 
 ```
 
-ps how to draw an arrow 
-https://forums.adobe.com/thread/1062749
+# 如何用markdown 编写ppt remark.js [wiki](https://github.com/gnab/remark/wiki/Formatting)
 
 ```
-# remark wiki
-# https://github.com/gnab/remark/wiki/Formatting
 
 # Main document title
 
@@ -33,19 +41,5 @@ Some content
 This chapter does not have sub sections
 
 ## And so on...
-```
-
-```
-# https://facebook.github.io/watchman/docs/install.html
-brew install watchman
-
-# launch http-server
-nohup http-server . &
-
-# add watch man server
-watchman -- trigger . rebuild '*' -- markdown-to-slides -s style.css keynote.md -o index.html
-
-# use local js
-watchman -- trigger . rebuild '*' -- sh rebuild.sh
 ```
 
